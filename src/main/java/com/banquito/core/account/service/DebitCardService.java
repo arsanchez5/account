@@ -10,6 +10,10 @@ public class DebitCardService {
 
     private DebitCardRepository debitCardRepository;
 
+    public DebitCardService(DebitCardRepository debitCardRepository) {
+        this.debitCardRepository = debitCardRepository;
+    }
+
     public DebitCard findByCardNumber(String cardNumber) {
         try {
             return debitCardRepository.findByCardNumber(cardNumber);
