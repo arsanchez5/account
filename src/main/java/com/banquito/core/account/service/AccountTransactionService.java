@@ -11,11 +11,15 @@ import com.banquito.core.account.repository.AccountTransactionRepository;
 @Service
 public class AccountTransactionService {
 
-    private AccountTransactionRepository accountTransactionRepository;
+    private final AccountTransactionRepository accountTransactionRepository;
 
-    public List<AccountTransaction> getAllAccountTransactions() {
+    public AccountTransactionService(AccountTransactionRepository accountTransactionRepository) {
+        this.accountTransactionRepository = accountTransactionRepository;
+    }
+
+    public List<AccountTransaction> obtainAllAccountTransactions() {
         try {
-            return accountTransactionRepository.findAll();
+            return this.accountTransactionRepository.findAll();
         } catch (Exception e) {
             throw new RuntimeException("Error al obtener todas las transacciones", e);
         }
@@ -29,14 +33,20 @@ public class AccountTransactionService {
         }
     }
 
-    public List<AccountTransaction> findByTransactionType(String transactionType) {
+    public AccountTransaction obtainTransactionType(String transactionType) {
         try {
-            return accountTransactionRepository.findByTransactionType(transactionType);
+            List<AccountTransaction> transactionTypeList = this.accountTransactionRepository
+                    .findByTransactionType(transactionType);
+            if (!transactionTypeList.isEmpty()) {
+                return transactionTypeList.get(0); // Assuming you only need the first one
+            } else {
+                throw new RuntimeException("No existe una transacción con tipo: " + transactionType);
+            }
         } catch (Exception e) {
-            throw new RuntimeException("Error al buscar transacciones por tipo de transacción", e);
+            throw new RuntimeException("Error al buscar transacciones por tipo", e);
         }
     }
-    
+
     public List<AccountTransaction> findByState(String state) {
         try {
             return accountTransactionRepository.findByState(state);
@@ -45,4 +55,3 @@ public class AccountTransactionService {
         }
     }
 }
-
