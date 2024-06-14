@@ -15,7 +15,7 @@ import com.banquito.core.account.model.AccountTransaction;
 import com.banquito.core.account.service.AccountTransactionService;
 
 @RestController
-@RequestMapping("/api/account-transactions")
+@RequestMapping("/account-transactions")
 public class AccountTransactionController {
 
     private final AccountTransactionService accountTransactionService;

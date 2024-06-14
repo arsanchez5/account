@@ -8,11 +8,11 @@ import com.banquito.core.account.model.Account;
 import com.banquito.core.account.repository.AccountRepository;
 
 @Service
-public class AccountService {
+public class AccountTransactionService {
 
     private AccountRepository accountRepository;
 
-    public AccountService(AccountRepository accountRepository) {
+    public AccountTransactionService(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
 
