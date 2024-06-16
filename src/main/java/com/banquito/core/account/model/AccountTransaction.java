@@ -2,7 +2,7 @@ package com.banquito.core.account.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.security.Timestamp;
+import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -54,15 +54,15 @@ public class AccountTransaction implements Serializable {
     private String debitorBankCode;
     @Column(name = "DEBITOR_ACCOUNT", length = 16)
     private String debitorAccount;
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "CREATION_DATE", nullable = false)
-    private Timestamp creationDate;
-    @Temporal(TemporalType.TIMESTAMP)
+    private Date creationDate;
+    @Temporal(TemporalType.DATE)
     @Column(name = "BOOKING_DATE", nullable = false)
-    private Timestamp bookingDate;
-    @Temporal(TemporalType.TIMESTAMP)
+    private Date bookingDate;
+    @Temporal(TemporalType.DATE)
     @Column(name = "VALUE_DATE", nullable = false)
-    private Timestamp valueDate;
+    private Date valueDate;
     @Column(name = "APPLY_TAX", length = 1, nullable = false)
     private String applyTax;
     @Column(name = "PARENT_TRANSACTION_KEY", length = 32)

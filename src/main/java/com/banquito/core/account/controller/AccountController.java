@@ -1,6 +1,5 @@
 package com.banquito.core.account.controller;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,9 +28,9 @@ public class AccountController {
         try {
             Account account = accountService.getById(id);
             AccountDTO accountDTO = accountMapper.toDTO(account);
-            return new ResponseEntity<>(accountDTO, HttpStatus.OK);
+            return ResponseEntity.ok(accountDTO);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return  ResponseEntity.notFound().build();
         }
     }
 }
