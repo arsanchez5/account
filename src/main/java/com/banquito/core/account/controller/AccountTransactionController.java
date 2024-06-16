@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/account-transactions")
+@RequestMapping(path = "transactions")
 public class AccountTransactionController {
 
     private final AccountTransactionService accountTransactionService;
@@ -29,13 +29,15 @@ public class AccountTransactionController {
         this.accountTransactionMapper = accountTransactionMapper;
     }
 
-    @GetMapping("/account/{accountId}")
-    public ResponseEntity<List<AccountTransactionDTO>> getTransactionsByAccountId(@PathVariable Integer accountId) {
-        List<AccountTransactionDTO> transactionDTOs = accountTransactionService.getTransactionsByAccountId(accountId)
-                .stream()
-                .map(accountTransactionMapper::toDTO)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(transactionDTOs);
+    @GetMapping("/{id}")
+    public ResponseEntity<AccountTransactionDTO> getById(@PathVariable Integer id) {
+        try {
+            System.out.println("va a buscar transaccion por id:" + id);
+            return ResponseEntity
+                    .ok(this.accountTransactionMapper.toDTO(this.accountTransactionService.obtainTransacctionById(id)));
+        } catch (RuntimeException rte) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/type/{transactionType}")
@@ -62,7 +64,7 @@ public class AccountTransactionController {
         try {
             AccountTransactionDTO createdTransactionDTO = accountTransactionService
                     .createTransaction(accountTransactionDTO);
-            return new ResponseEntity<>(createdTransactionDTO, HttpStatus.CREATED);
+            return ResponseEntity.ok(createdTransactionDTO);
         } catch (RuntimeException rte) {
             rte.printStackTrace();
             return ResponseEntity.badRequest().build();

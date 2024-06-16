@@ -19,19 +19,20 @@ public class AccountTransactionService {
     private final AccountTransactionRepository accountTransactionRepository;
     private final AccountTransactionMapper accountTransactionMapper;
 
-    public AccountTransactionService(AccountTransactionRepository accountTransactionRepository, AccountTransactionMapper accountTransactionMapper) {
+    public AccountTransactionService(AccountTransactionRepository accountTransactionRepository,
+            AccountTransactionMapper accountTransactionMapper) {
         this.accountTransactionRepository = accountTransactionRepository;
         this.accountTransactionMapper = accountTransactionMapper;
     }
 
-    @Transactional(Transactional.TxType.NEVER)
-    public AccountTransaction getTransactionsByAccountId(Integer accountId) {
-      Optional<AccountTransaction> transOpt = this.accountTransactionRepository.findAllById(id);
-      if(transOpt.isPresent()){
-        return transOpt.get();
-      } else{
-        throw new RuntimeException("No existe la transaccion con id:"+ id);
-      }
+    @Transactional
+    public AccountTransaction obtainTransacctionById(Integer id) {
+        Optional<AccountTransaction> transOpt = this.accountTransactionRepository.findById(id);
+        if (transOpt.isPresent()) {
+            return transOpt.get();
+        } else {
+            throw new RuntimeException("No existe la transaccion con id:" + id);
+        }
     }
 
     public List<AccountTransaction> getTransactionsByTransactionType(String transactionType) {
